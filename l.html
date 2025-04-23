@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Professional Week Timetable</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .timeline-card {
+      transition: all 0.3s ease;
+    }
+    
+    .timeline-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .active-tab {
+      position: relative;
+    }
+    
+    .active-tab::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+    
+    .progress-bar {
+      position: relative;
+      height: 4px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #0ea5e9 100%);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 md:p-8">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-12 animate__animated animate__fadeIn">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-3">Weekly Planner</h1>
+      <p class="text-gray-600 text-lg">Your productivity dashboard for the week</p>
+      <div class="w-24 h-1 mx-auto mt-4 rounded-full gradient-bg"></div>
+    </div>
+
+    <!-- Time Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 animate__animated animate__fadeInUp">
+      <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-indigo-500">
+        <div class="flex items-center mb-3">
+          <div class="p-3 bg-indigo-100 rounded-lg mr-4">
+            <i class="fas fa-laptop-code text-indigo-600"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800">Coding Time</h3>
+            <p class="text-sm text-gray-500">25 hours weekly</p>
+          </div>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-indigo-600 h-2 rounded-full" style="width: 70%"></div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-blue-500">
+        <div class="flex items-center mb-3">
+          <div class="p-3 bg-blue-100 rounded-lg mr-4">
+            <i class="fas fa-graduation-cap text-blue-600"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800">College Hours</h3>
+            <p class="text-sm text-gray-500">35 hours weekly</p>
+          </div>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-blue-600 h-2 rounded-full" style="width: 60%"></div>
+        </div>
+      </div>
+      
+      <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-cyan-500">
+        <div class="flex items-center mb-3">
+          <div class="p-3 bg-cyan-100 rounded-lg mr-4">
+            <i class="fas fa-bed text-cyan-600"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-gray-800">Sleep Time</h3>
+            <p class="text-sm text-gray-500">35 hours weekly</p>
+          </div>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-cyan-600 h-2 rounded-full" style="width: 40%"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Day Tabs Navigation -->
+    <div class="bg-white rounded-xl shadow-md p-4 mb-8 animate__animated animate__fadeIn animate__delay-1s">
+      <div class="flex overflow-x-auto py-2 px-1 scrollbar-hide space-x-1 md:space-x-4 md:justify-center" id="dayTabs"></div>
+    </div>
+    
+    <!-- Clock and Current Activity -->
+    <div class="bg-white rounded-xl shadow-md p-5 mb-8 animate__animated animate__fadeIn animate__delay-1s">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="flex items-center mb-4 md:mb-0">
+          <div class="p-4 gradient-bg rounded-lg text-white mr-5">
+            <i class="fas fa-clock text-2xl"></i>
+          </div>
+          <div>
+            <p class="text-gray-500 text-sm">Current Time</p>
+            <h2 class="text-2xl font-bold text-gray-800" id="currentTime">--:--</h2>
+          </div>
+        </div>
+        
+        <div class="bg-gray-100 rounded-lg p-4 w-full md:w-auto">
+          <p class="text-gray-500 text-sm">Current Activity</p>
+          <h3 class="font-semibold text-gray-800" id="currentActivity">Not scheduled</h3>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Schedule Container -->
+    <div id="scheduleContainer" class="space-y-4 animate__animated animate__fadeInUp animate__delay-2s"></div>
+  </div>
+
+  <script>
+    const timetable = {
+      Monday: [
+        { start: "07:30", end: "08:00", activity: "Morning buffer (breakfast/travel)", icon: "utensils" },
+        { start: "08:00", end: "13:00", activity: "College", icon: "graduation-cap" },
+        { start: "13:00", end: "14:30", activity: "Lunch", icon: "hamburger" },
+        { start: "14:30", end: "17:30", activity: "Coding practice (1 medium + 2 hard problems)", icon: "laptop-code" },
+        { start: "17:30", end: "19:00", activity: "System-design fundamentals", icon: "diagram-project" },
+        { start: "19:00", end: "19:30", activity: "Time-pass", icon: "coffee" },
+        { start: "19:30", end: "23:30", activity: "Aptitude mocks + behavioral prep", icon: "brain" },
+        { start: "23:30", end: "02:30", activity: "Night revision & spaced repetition", icon: "book-open" },
+        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
+      ],
+      Tuesday: [
+        { start: "08:00", end: "12:00", activity: "College", icon: "graduation-cap" },
+        { start: "12:00", end: "14:00", activity: "Break + Lunch", icon: "hamburger" },
+        { start: "14:00", end: "16:00", activity: "College continued", icon: "graduation-cap" },
+        { start: "16:00", end: "18:00", activity: "Leetcode Practice (2 Medium + 1 Hard)", icon: "code" },
+        { start: "18:00", end: "19:00", activity: "Mock Interview or Behavioral Prep", icon: "user-tie" },
+        { start: "19:00", end: "23:00", activity: "Aptitude + Company Specific MCQs", icon: "clipboard-question" },
+        { start: "23:00", end: "02:30", activity: "Project / MERN stack revision", icon: "folder-open" },
+        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
+      ],
+      Wednesday: [
+        { start: "08:00", end: "15:00", activity: "College", icon: "graduation-cap" },
+        { start: "15:00", end: "17:00", activity: "CP (2 Medium)", icon: "code" },
+        { start: "17:00", end: "19:00", activity: "System Design Case Study", icon: "sitemap" },
+        { start: "19:00", end: "20:00", activity: "Time-pass / Dinner", icon: "utensils" },
+        { start: "20:00", end: "23:30", activity: "Aptitude + Resume Tweaking", icon: "file-alt" },
+        { start: "23:30", end: "02:30", activity: "Mock Interview + Behavioral Round Prep", icon: "comments" },
+        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
+      ],
+      Thursday: [
+        { start: "08:00", end: "16:00", activity: "College", icon: "graduation-cap" },
+        { start: "16:00", end: "17:00", activity: "Relax / Walk", icon: "person-walking" },
+        { start: "17:00", end: "20:00", activity: "Live Coding Contest", icon: "trophy" },
+        { start: "20:00", end: "21:00", activity: "Dinner / Break", icon: "utensils" },
+        { start: "21:00", end: "23:30", activity: "Project Work + Git commits", icon: "code-branch" },
+        { start: "23:30", end: "02:30", activity: "Reading DSA Concepts", icon: "book" },
+        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
+      ],
+      Friday: [
+        { start: "08:00", end: "16:00", activity: "College", icon: "graduation-cap" },
+        { start: "16:00", end: "18:00", activity: "Mock Interview (FAANG-style)", icon: "user-tie" },
+        { start: "18:00", end: "19:30", activity: "Behavioral Q&A + STAR Technique", icon: "star" },
+        { start: "19:30", end: "23:00", activity: "Project polishing (UI / Backend)", icon: "paint-brush" },
+        { start: "23:00", end: "02:30", activity: "Open Source or Contributions", icon: "code-pull-request" },
+        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
+      ],
+      Saturday: [
+        { start: "10:00", end: "13:00", activity: "Weekly Contest + Analysis", icon: "trophy" },
+        { start: "13:00", end: "14:30", activity: "Lunch", icon: "hamburger" },
+        { start: "14:30", end: "16:00", activity: "Open DSA Topic (Graph, DP, etc)", icon: "network-wired" },
+        { start: "16:00", end: "18:00", activity: "Behavioral + Aptitude Mock Set", icon: "tasks" },
+        { start: "18:00", end: "20:00", activity: "Revise Resume Projects", icon: "file-code" },
+        { start: "20:00", end: "02:30", activity: "Netflix/Relax & Sleep", icon: "tv" },
+        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
+      ],
+      Sunday: [
+        { start: "10:00", end: "12:00", activity: "Practice DSA on Whiteboard", icon: "chalkboard" },
+        { start: "12:00", end: "14:00", activity: "Lunch + Rest", icon: "hamburger" },
+        { start: "14:00", end: "16:00", activity: "Project Deployment / Demo", icon: "rocket" },
+        { start: "16:00", end: "18:00", activity: "Mock HR Round / Storytelling", icon: "comments" },
+        { start: "18:00", end: "20:00", activity: "Weekly Reflection + Plan Next Week", icon: "calendar-check" },
+        { start: "20:00", end: "02:30", activity: "Open Practice / Chill", icon: "couch" },
+        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
+      ]
+    };
+
+    const days = Object.keys(timetable);
+    const dayTabs = document.getElementById("dayTabs");
+    const scheduleContainer = document.getElementById("scheduleContainer");
+    const currentTimeElement = document.getElementById("currentTime");
+    const currentActivityElement = document.getElementById("currentActivity");
+    
+    // Color palette for different activity types
+    const activityColors = {
+      "College": "indigo",
+      "Sleep": "purple",
+      "Coding": "blue",
+      "Mock": "emerald",
+      "Lunch": "amber",
+      "Project": "rose",
+      "System": "teal",
+      "Time-pass": "lime",
+      "Aptitude": "sky",
+      "Night": "violet",
+      "Break": "yellow",
+      "Interview": "green",
+      "DSA": "cyan",
+      "Contest": "orange",
+      "Open": "fuchsia",
+      "Netflix": "red",
+      "Dinner": "amber",
+      "Relax": "emerald",
+      "Weekly": "blue",
+      "HR": "indigo",
+      "Morning": "amber",
+      "Practice": "blue"
+    };
+    
+    function getColorForActivity(activity) {
+      for (const [key, color] of Object.entries(activityColors)) {
+        if (activity.includes(key)) {
+          return color;
+        }
+      }
+      return "gray";
+    }
+    
+    function formatTimeForDisplay(timeString) {
+      const [hours, minutes] = timeString.split(":").map(Number);
+      let period = "AM";
+      let formattedHours = hours;
+      
+      if (hours >= 12) {
+        period = "PM";
+        formattedHours = hours === 12 ? 12 : hours - 12;
+      }
+      
+      if (formattedHours === 0) {
+        formattedHours = 12;
+      }
+      
+      return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+    }
+    
+    function calculateTimeDifference(start, end) {
+      const [startHours, startMinutes] = start.split(":").map(Number);
+      let [endHours, endMinutes] = end.split(":").map(Number);
+      
+      if (endHours < startHours) {
+        endHours += 24;
+      }
+      
+      const totalStartMinutes = startHours * 60 + startMinutes;
+      const totalEndMinutes = endHours * 60 + endMinutes;
+      
+      const diffMinutes = totalEndMinutes - totalStartMinutes;
+      const hours = Math.floor(diffMinutes / 60);
+      const minutes = diffMinutes % 60;
+      
+      return { hours, minutes };
+    }
+    
+    function renderTabs() {
+      days.forEach((day, idx) => {
+        const isToday = day === getCurrentDay();
+        const button = document.createElement("button");
+        
+        button.innerHTML = `
+          <div class="flex flex-col items-center px-6 py-3 rounded-lg transition-all duration-300 ease-in-out ${isToday ? 'bg-gradient-to-r from-indigo-500 to-blue-600 text-white shadow-lg' : 'hover:bg-gray-100'}">
+            <span class="text-xs opacity-80">${idx + 1}</span>
+            <span class="font-medium ${isToday ? '' : 'text-gray-700'}">${day}</span>
+          </div>
+        `;
+        
+        button.className = `focus:outline-none ${isToday ? 'active-tab' : ''}`;
+        button.onclick = () => {
+          document.querySelectorAll("#dayTabs button").forEach(btn => {
+            btn.classList.remove("active-tab");
+            btn.querySelector("div").classList.remove("bg-gradient-to-r", "from-indigo-500", "to-blue-600", "text-white", "shadow-lg");
+            btn.querySelector("div").classList.add("hover:bg-gray-100");
+            btn.querySelector("span:last-child").classList.add("text-gray-700");
+          });
+          
+          button.classList.add("active-tab");
+          const buttonDiv = button.querySelector("div");
+          buttonDiv.classList.add("bg-gradient-to-r", "from-indigo-500", "to-blue-600", "text-white", "shadow-lg");
+          buttonDiv.classList.remove("hover:bg-gray-100");
+          button.querySelector("span:last-child").classList.remove("text-gray-700");
+          
+          renderSchedule(day);
+          
+          // Animation for schedule items
+          gsap.from(".timeline-card", {
+            y: 20,
+            opacity: 0,
+            duration: 0.4,
+            stagger: 0.1,
+            ease: "power1.out"
+          });
+        };
+        
+        dayTabs.appendChild(button);
+        
+        if (isToday && idx === 0) {
+          button.click();
+        }
+      });
+      
+      if (!days.includes(getCurrentDay())) {
+        document.querySelector("#dayTabs button").click();
+      }
+    }
+    
+    function getCurrentDay() {
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      return days[new Date().getDay()];
+    }
+    
+    function renderSchedule(day) {
+      scheduleContainer.innerHTML = "";
+      
+      // Header for the schedule
+      const header = document.createElement("div");
+      header.className = "flex justify-between items-center mb-6";
+      header.innerHTML = `
+        <h2 class="text-2xl font-bold text-gray-800">${day}'s Schedule</h2>
+        <span class="text-sm bg-gray-200 text-gray-700 px-3 py-1 rounded-full">${timetable[day].length} Activities</span>
+      `;
+      scheduleContainer.appendChild(header);
+      
+      timetable[day].forEach((slot, index) => {
+        const color = getColorForActivity(slot.activity);
+        const timeDiff = calculateTimeDifference(slot.start, slot.end);
+        const duration = `${timeDiff.hours}h ${timeDiff.minutes > 0 ? timeDiff.minutes + 'm' : ''}`;
+        
+        const card = document.createElement("div");
+        card.className = `timeline-card bg-white rounded-xl shadow-md p-5 border-l-4 border-${color}-500 mb-4 relative overflow-hidden`;
+        
+        // Add decorative element
+        const decorativeElement = document.createElement("div");
+        decorativeElement.className = `absolute top-0 right-0 w-32 h-32 -mt-16 -mr-16 rounded-full bg-${color}-100 opacity-30`;
+        card.appendChild(decorativeElement);
+        
+        card.innerHTML += `
+          <div class="flex flex-col md:flex-row md:items-center justify-between">
+            <div class="flex items-start md:items-center mb-4 md:mb-0">
+              <div class="bg-${color}-100 text-${color}-600 p-3 rounded-lg mr-4">
+                <i class="fas fa-${slot.icon || 'calendar'}"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800 text-lg">${slot.activity}</h3>
+                <div class="flex items-center text-gray-500 text-sm mt-1">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>${formatTimeForDisplay(slot.start)} - ${formatTimeForDisplay(slot.end)}</span>
+                  <span class="ml-2 bg-${color}-100 text-${color}-700 px-2 py-0.5 rounded text-xs">${duration}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+              <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-lg text-sm transition-colors duration-200">
+                <i class="fas fa-bell-slash mr-1"></i> Mute
+              </button>
+              <button class="bg-${color}-50 hover:bg-${color}-100 text-${color}-700 px-3 py-1 rounded-lg text-sm transition-colors duration-200">
+                <i class="fas fa-edit mr-1"></i> Edit
+              </button>
+            </div>
+          </div>
+          
+          ${index < timetable[day].length - 1 ? `
+            <div class="mt-4 pt-2 border-t border-gray-100">
+              <div class="flex items-center text-sm text-gray-500">
+                <i class="fas fa-hourglass-half mr-2"></i>
+                <span>Next: ${timetable[day][index + 1].activity} at ${formatTimeForDisplay(timetable[day][index + 1].start)}</span>
+              </div>
+            </div>
+          ` : ''}
+        `;
+        
+        scheduleContainer.appendChild(card);
+      });
+    }
+    
+    function updateCurrentTime() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      
+      // Format current time
+      let period = hours >= 12 ? 'PM' : 'AM';
+      let displayHours = hours % 12;
+      if (displayHours === 0) displayHours = 12;
+      
+      currentTimeElement.textContent = `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
+      
+      // Find current activity
+      const currentDay = getCurrentDay();
+      if (timetable[currentDay]) {
+        const currentTimeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        
+        let found = false;
+        for (const slot of timetable[currentDay]) {
+          if (currentTimeString >= slot.start && currentTimeString < slot.end) {
+            currentActivityElement.textContent = slot.activity;
+            found = true;
+            break;
+          }
+        }
+        
+        if (!found) {
+          currentActivityElement.textContent = "Free time";
+        }
+      }
+      
+      setTimeout(updateCurrentTime, 60000); // Update every minute
+    }
+    
+    // Initialize
+    renderTabs();
+    updateCurrentTime();
+    
+    // Add some GSAP animations
+    gsap.from(".animate__fadeIn", {
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out",
+      stagger: 0.2
+    });
+    
+    gsap.from(".animate__fadeInUp", {
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out",
+      stagger: 0.2
+    });
+  </script>
+</body>
+</html>
