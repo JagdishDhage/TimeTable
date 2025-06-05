@@ -140,72 +140,76 @@
 
   <script>
     const timetable = {
-      Monday: [
-        { start: "07:30", end: "08:00", activity: "Morning buffer (breakfast/travel)", icon: "utensils" },
-        { start: "08:00", end: "13:00", activity: "College", icon: "graduation-cap" },
-        { start: "13:00", end: "14:30", activity: "Lunch", icon: "hamburger" },
-        { start: "14:30", end: "17:30", activity: "Coding practice (1 medium + 2 hard problems)", icon: "laptop-code" },
-        { start: "17:30", end: "19:00", activity: "System-design fundamentals", icon: "diagram-project" },
-        { start: "19:00", end: "19:30", activity: "Time-pass", icon: "coffee" },
-        { start: "19:30", end: "23:30", activity: "Aptitude mocks + behavioral prep", icon: "brain" },
-        { start: "23:30", end: "02:30", activity: "Night revision & spaced repetition", icon: "book-open" },
-        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
-      ],
-      Tuesday: [
-        { start: "08:00", end: "12:00", activity: "College", icon: "graduation-cap" },
-        { start: "12:00", end: "14:00", activity: "Break + Lunch", icon: "hamburger" },
-        { start: "14:00", end: "16:00", activity: "College continued", icon: "graduation-cap" },
-        { start: "16:00", end: "18:00", activity: "Leetcode Practice (2 Medium + 1 Hard)", icon: "code" },
-        { start: "18:00", end: "19:00", activity: "Mock Interview or Behavioral Prep", icon: "user-tie" },
-        { start: "19:00", end: "23:00", activity: "Aptitude + Company Specific MCQs", icon: "clipboard-question" },
-        { start: "23:00", end: "02:30", activity: "Project / MERN stack revision", icon: "folder-open" },
-        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
-      ],
-      Wednesday: [
-        { start: "08:00", end: "15:00", activity: "College", icon: "graduation-cap" },
-        { start: "15:00", end: "17:00", activity: "CP (2 Medium)", icon: "code" },
-        { start: "17:00", end: "19:00", activity: "System Design Case Study", icon: "sitemap" },
-        { start: "19:00", end: "20:00", activity: "Time-pass / Dinner", icon: "utensils" },
-        { start: "20:00", end: "23:30", activity: "Aptitude + Resume Tweaking", icon: "file-alt" },
-        { start: "23:30", end: "02:30", activity: "Mock Interview + Behavioral Round Prep", icon: "comments" },
-        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
-      ],
-      Thursday: [
-        { start: "08:00", end: "16:00", activity: "College", icon: "graduation-cap" },
-        { start: "16:00", end: "17:00", activity: "Relax / Walk", icon: "person-walking" },
-        { start: "17:00", end: "20:00", activity: "Live Coding Contest", icon: "trophy" },
-        { start: "20:00", end: "21:00", activity: "Dinner / Break", icon: "utensils" },
-        { start: "21:00", end: "23:30", activity: "Project Work + Git commits", icon: "code-branch" },
-        { start: "23:30", end: "02:30", activity: "Reading DSA Concepts", icon: "book" },
-        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
-      ],
-      Friday: [
-        { start: "08:00", end: "16:00", activity: "College", icon: "graduation-cap" },
-        { start: "16:00", end: "18:00", activity: "Mock Interview (FAANG-style)", icon: "user-tie" },
-        { start: "18:00", end: "19:30", activity: "Behavioral Q&A + STAR Technique", icon: "star" },
-        { start: "19:30", end: "23:00", activity: "Project polishing (UI / Backend)", icon: "paint-brush" },
-        { start: "23:00", end: "02:30", activity: "Open Source or Contributions", icon: "code-pull-request" },
-        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
-      ],
-      Saturday: [
-        { start: "10:00", end: "13:00", activity: "Weekly Contest + Analysis", icon: "trophy" },
-        { start: "13:00", end: "14:30", activity: "Lunch", icon: "hamburger" },
-        { start: "14:30", end: "16:00", activity: "Open DSA Topic (Graph, DP, etc)", icon: "network-wired" },
-        { start: "16:00", end: "18:00", activity: "Behavioral + Aptitude Mock Set", icon: "tasks" },
-        { start: "18:00", end: "20:00", activity: "Revise Resume Projects", icon: "file-code" },
-        { start: "20:00", end: "02:30", activity: "Netflix/Relax & Sleep", icon: "tv" },
-        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
-      ],
-      Sunday: [
-        { start: "10:00", end: "12:00", activity: "Practice DSA on Whiteboard", icon: "chalkboard" },
-        { start: "12:00", end: "14:00", activity: "Lunch + Rest", icon: "hamburger" },
-        { start: "14:00", end: "16:00", activity: "Project Deployment / Demo", icon: "rocket" },
-        { start: "16:00", end: "18:00", activity: "Mock HR Round / Storytelling", icon: "comments" },
-        { start: "18:00", end: "20:00", activity: "Weekly Reflection + Plan Next Week", icon: "calendar-check" },
-        { start: "20:00", end: "02:30", activity: "Open Practice / Chill", icon: "couch" },
-        { start: "02:30", end: "07:30", activity: "Sleep", icon: "bed" }
-      ]
-    };
+  Monday: [
+    { start: "07:30", end: "08:00", activity: "Breakfast / Travel", icon: "utensils" },
+    { start: "08:00", end: "13:00", activity: "College", icon: "graduation-cap" },
+    { start: "13:00", end: "14:00", activity: "Lunch + Break", icon: "hamburger" },
+    { start: "14:00", end: "15:30", activity: "Aptitude (Quant + Reasoning)", icon: "brain" },
+    { start: "15:30", end: "17:30", activity: "Leetcode (1 Medium + 2 Hard)", icon: "laptop-code" },
+    { start: "17:30", end: "18:30", activity: "Behavioral Q&A / STAR Technique", icon: "user-tie" },
+    { start: "18:30", end: "19:00", activity: "Break", icon: "coffee" },
+    { start: "19:00", end: "21:00", activity: "DSA Deep Dive / System Design (alternate days)", icon: "book-open" },
+    { start: "21:00", end: "23:00", activity: "Project Work / Resume Polishing", icon: "code-branch" },
+    { start: "23:00", end: "00:30", activity: "Flashcards + Aptitude Revision", icon: "repeat" },
+    { start: "00:30", end: "07:30", activity: "Sleep", icon: "bed" }
+  ],
+
+  Tuesday: [
+    { start: "07:30", end: "08:00", activity: "Breakfast / Travel", icon: "utensils" },
+    { start: "08:00", end: "13:00", activity: "College", icon: "graduation-cap" },
+    { start: "13:00", end: "14:00", activity: "Lunch + Rest", icon: "hamburger" },
+    { start: "14:00", end: "15:30", activity: "Aptitude Practice + Company Specific MCQs", icon: "clipboard-question" },
+    { start: "15:30", end: "17:30", activity: "Leetcode Practice (2 Medium + 1 Hard)", icon: "code" },
+    { start: "17:30", end: "18:30", activity: "Mock Interview", icon: "comments" },
+    { start: "18:30", end: "19:00", activity: "Break", icon: "coffee" },
+    { start: "19:00", end: "21:00", activity: "System Design / CP Problem Solving", icon: "network-wired" },
+    { start: "21:00", end: "23:00", activity: "Project Debugging / Git commits", icon: "code-branch" },
+    { start: "23:00", end: "00:30", activity: "Aptitude Flashcards + Notes", icon: "brain" },
+    { start: "00:30", end: "07:30", activity: "Sleep", icon: "bed" }
+  ],
+
+  Wednesday: [
+    { start: "07:30", end: "08:00", activity: "Breakfast / Travel", icon: "utensils" },
+    { start: "08:00", end: "13:00", activity: "College", icon: "graduation-cap" },
+    { start: "13:00", end: "14:00", activity: "Lunch + Break", icon: "hamburger" },
+    { start: "14:00", end: "15:30", activity: "Aptitude Test Series (Timer-based)", icon: "hourglass" },
+    { start: "15:30", end: "17:30", activity: "Coding (DSA Topic Focused)", icon: "code" },
+    { start: "17:30", end: "18:30", activity: "Behavioral Round Practice", icon: "user-tie" },
+    { start: "18:30", end: "19:00", activity: "Walk / Break", icon: "person-walking" },
+    { start: "19:00", end: "21:00", activity: "Mock Interviews or OS/DBMS Revision", icon: "book" },
+    { start: "21:00", end: "23:00", activity: "Resume & Portfolio Review", icon: "file-alt" },
+    { start: "23:00", end: "00:30", activity: "Quick Aptitude Quiz", icon: "clipboard-question" },
+    { start: "00:30", end: "07:30", activity: "Sleep", icon: "bed" }
+  ],
+
+  Thursday: [
+    { start: "07:30", end: "08:00", activity: "Breakfast / Travel", icon: "utensils" },
+    { start: "08:00", end: "13:00", activity: "College", icon: "graduation-cap" },
+    { start: "13:00", end: "14:00", activity: "Lunch + Rest", icon: "hamburger" },
+    { start: "14:00", end: "15:30", activity: "Aptitude Practice (Alternate Set)", icon: "brain" },
+    { start: "15:30", end: "17:30", activity: "Live Coding Contest or Hard Problems", icon: "trophy" },
+    { start: "17:30", end: "18:30", activity: "Debug Solutions + Notes", icon: "bug" },
+    { start: "18:30", end: "19:00", activity: "Break", icon: "coffee" },
+    { start: "19:00", end: "21:00", activity: "System Design or CP Set Practice", icon: "network-wired" },
+    { start: "21:00", end: "23:00", activity: "Project Fixes / UI Tweaks", icon: "paint-brush" },
+    { start: "23:00", end: "00:30", activity: "Aptitude Flashback", icon: "repeat" },
+    { start: "00:30", end: "07:30", activity: "Sleep", icon: "bed" }
+  ],
+
+  Friday: [
+    { start: "07:30", end: "08:00", activity: "Breakfast / Travel", icon: "utensils" },
+    { start: "08:00", end: "13:00", activity: "College", icon: "graduation-cap" },
+    { start: "13:00", end: "14:00", activity: "Lunch + Short Break", icon: "hamburger" },
+    { start: "14:00", end: "15:30", activity: "Aptitude Full-Length Mock", icon: "clipboard-list" },
+    { start: "15:30", end: "17:30", activity: "FAANG-Style Coding Round", icon: "code" },
+    { start: "17:30", end: "18:30", activity: "Behavioral Q&A Practice", icon: "user-tie" },
+    { start: "18:30", end: "19:00", activity: "Break / Walk", icon: "person-walking" },
+    { start: "19:00", end: "21:00", activity: "Resume Update / Portfolio Hosting", icon: "file-code" },
+    { start: "21:00", end: "23:00", activity: "GitHub + Contributions", icon: "code-pull-request" },
+    { start: "23:00", end: "00:30", activity: "Aptitude Revision", icon: "repeat" },
+    { start: "00:30", end: "07:30", activity: "Sleep", icon: "bed" }
+  ]
+};
 
     const days = Object.keys(timetable);
     const dayTabs = document.getElementById("dayTabs");
